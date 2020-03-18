@@ -22,7 +22,7 @@ class CrimeReport(models.Model):
     suspect_number = models.CharField("Suspect Number",blank=True, null=True,max_length=264)
     suspect_email = models.CharField("Suspect Email",blank=True, null=True,max_length=264)
     suspect_details = models.CharField("Other Suspect Details",blank=True, null=True,max_length=264)
-    last_action_taken_on = models.DateField()  # Field name made lowercase.
+    last_action_taken_on = models.DateField(blank=True, null=True)  # Field name made lowercase.
     remarks = models.TextField("Remarks",blank=True, null=True)
 
     class Meta:

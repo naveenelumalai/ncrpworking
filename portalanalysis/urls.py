@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from managedata import views
+# Use include() to add URLS from the catalog application and authentication system
+from django.urls import include
 
 urlpatterns = [
     path('',views.index,name='index'),
     path('admin/', admin.site.urls),
+]
+
+urlpatterns += [
+    path('managedata/', include('managedata.urls')),
 ]
