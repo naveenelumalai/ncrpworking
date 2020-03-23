@@ -20,10 +20,10 @@ from managedata import views
 from django.urls import include
 
 urlpatterns = [
-    path('',views.index,name='index'),
+    #path('',views.index,name='index'),
     path('admin/', admin.site.urls),
 ]
 
 urlpatterns += [
-    path('managedata/', include('managedata.urls')),
+    path('', include('managedata.urls')),
 ]

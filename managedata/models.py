@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.urls import reverse
 
 
 class CrimeReport(models.Model):
@@ -15,9 +16,9 @@ class CrimeReport(models.Model):
     category = models.CharField(db_column='Category', blank=True, null=True,max_length=264)  # Field name made lowercase.
     sub_category = models.CharField(db_column='Sub_Category', blank=True, null=True,max_length=264)  # Field name made lowercase.
     status = models.CharField(db_column='Status', blank=True, null=True,max_length=264)  # Field name made lowercase.
-    incident_date = models.DateField()  # Field name made lowercase.
+    incident_date = models.DateField(blank=True, null=True)  # Field name made lowercase.
     incident_place = models.CharField("Incident Location",blank=True, null=True,max_length=264)
-    complaint_date = models.DateField()  # Field name made lowercase.   
+    complaint_date = models.DateField(blank=True, null=True)  # Field name made lowercase.   
     suspect_name = models.CharField("Suspect Name",blank=True, null=True,max_length=264)
     suspect_number = models.CharField("Suspect Number",blank=True, null=True,max_length=264)
     suspect_email = models.CharField("Suspect Email",blank=True, null=True,max_length=264)
@@ -31,3 +32,6 @@ class CrimeReport(models.Model):
 
     def __str__(self):
         return self.acknowledgement_no
+
+    def get_absolute_url(self):
+        return reverse('complaints-detail', kwargs={'pk': self.pk})

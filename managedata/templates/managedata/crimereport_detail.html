@@ -1,34 +1,142 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>NCRP Complaints</title>
-  </head>
-  <body>
-    <div class="container">
-        <h2>NCRP Complaint details</h2>  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <ul class="list-group">
-          <li class="list-group-item">{{ crimereport.acknowledgement_no }}</li>
-          <li class="list-group-item">{{ crimereport.district }}</li>
-          <li class="list-group-item">{{ crimereport.police_station }}</li>
-          <li class="list-group-item">{{ crimereport.category }}</li>
-          <li class="list-group-item">{{ crimereport.sub_category }}</li>
-        </ul>
-         
+  <title>NCRP Complaints</title>
+</head>
 
+<body>
+  <header>
+    <div class="navbar-dark collapse" id="navbarHeader" style="background-color: #43758f;">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-md-7 py-4">
+            <ul class="list-unstyled">
+              <li>
+                <a href="/" class="navbar-brand d-flex align-items-center">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/{{ crimereport.acknowledgement_no }}/update" class="navbar-brand d-flex align-items-center">
+                  Edit Complaint Details
+                </a>
+              </li>
+            </ul>
+
+          </div>
+          <div class="col-sm-4 offset-md-1 py-4">
+            <form action="{% url 'search_results' %}" method="GET">
+              <input name="q" type="text" placeholder="Search...">
+              <input type="submit" class='btn btn-outline-light' value="Search">
+            </form>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-dark box-shadow" style="background-color: #43758f;">
+      <div class="container d-flex justify-content-between">
+        <a href="" class="navbar-brand d-flex align-items-center"data-toggle="collapse" data-target="#navbarHeader"
+        aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+
+          <strong>NCRP Complaint Details of {{ crimereport.acknowledgement_no }}</strong>
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarHeader"
+          aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <br>
+  <div class="container-fluid">
+    <!-- Control the column width, and how they should appear on different devices -->
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <h1 class="display-4 text-center">{{ crimereport.acknowledgement_no }}</h1>
+        </tr>
+        <tr>
+          <td>District : {{ crimereport.district }}</td>
+          <td>Police station : {{ crimereport.police_station }}</td>
+        </tr>
+        <tr>
+          <td>Category : {{ crimereport.category }}</td>
+          <td>Sub category: {{ crimereport.sub_category }}</td>
+        </tr>
+        <tr>
+          <td>Status : {{ crimereport.status }}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>CSR Number :</td>
+          <td>FIR Number :</td>
+        </tr>
+        <tr>
+          <td>Incident Date : {{ crimereport.incident_date }}</td>
+          <td>Incident Place : {{ crimereport.incident_place }}</td>
+        </tr>
+        <tr>
+          <td>Complaint Date : {{ crimereport.complaint_date }}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Suspect Name : {{ crimereport.suspect_name }}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Suspect Number : {{ crimereport.suspect_number }}</td>
+          <td>Suspect Email : {{ crimereport.suspect_email }}</td>
+        </tr>
+        <tr>
+          <td>Suspect Details : {{ crimereport.suspect_details }}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Last Action Taken on : {{ crimereport.last_action_taken_on }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Remarks</h5>
+        </div>
+        <p class="mb-1">{{ crimereport.remarks }}</p>
       </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+    </div>
+    <br>
+    <table>
+      <div class=container" style="float: right;">
+        <a href="/{{ crimereport.acknowledgement_no }}/update" class="btn btn-info">Edit Complaint Details</a>
+      </div>
+    </table>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

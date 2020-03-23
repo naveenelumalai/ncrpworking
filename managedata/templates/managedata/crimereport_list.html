@@ -1,49 +1,120 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>NCRP Complaints</title>
-  </head>
-  <body>
-    <div class="container">
-        <h2>NCRP Complaint details</h2>           
-        <table class="table table-striped">
-          <thead>
-            <tr>  
-              <th>NCRP Complaint Number: </th>
-              <th>District</th>
-              <th>Police Station</th>
-              <th>Category</th>
-              <th>Sub Category</th>     
-            </tr>
-          </thead>
-          <tbody>
-            {% for crime in crimereport_list %}
-            <tr>
-              <td><a href="{{ crime.acknowledgement_no }}">
-                    {{ crime.acknowledgement_no }}</td>
-                  </a>
-              <td>{{ crime.district }}</td>
-              <td>{{ crime.police_station }}</td>
-              <td>{{ crime.category }}</td>
-              <td>{{ crime.sub_category }}</td>
-      
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <title>NCRP Complaints</title>
+</head>
+
+<body>
+  <header>
+    <div class="navbar-dark collapse" id="navbarHeader" style="background-color: #43758f;">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-md-7 py-4">
+            <ul class="list-unstyled">
+              <li>
+                <a href="/" class="navbar-brand d-flex align-items-center">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/addcomplaint" class="navbar-brand d-flex align-items-center">
+                  Add New Complaint
+                </a>
+              </li>
+            </ul>
+
+          </div>
+          <div class="col-sm-4 offset-md-1 py-4">
+            <form action="{% url 'search_results' %}" method="GET">
+              <input name="q" type="text" placeholder="Search...">
+              <input type="submit" class='btn btn-outline-light' value="Search">
+            </form>
+
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="navbar navbar-dark box-shadow" style="background-color: #43758f;">
+      <div class="container d-flex justify-content-between">
+        <a href="" class="navbar-brand d-flex align-items-center" data-toggle="collapse" data-target="#navbarHeader"
+          aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+          <strong>NCRP Complaints List</strong>
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarHeader"
+          aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>NCRP Complaint Number: </th>
+          <th>District</th>
+          <th>Police Station</th>
+          <th>Category</th>
+          <th>Sub Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for crime in crimereport_list %}
+        <tr>
+          <td><a href="{{ crime.get_absolute_url }}">
+              {{ crime.acknowledgement_no }}</td>
+          </a>
+          <td>{{ crime.district }}</td>
+          <td>{{ crime.police_station }}</td>
+          <td>{{ crime.category }}</td>
+          <td>{{ crime.sub_category }}</td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination float-right">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}"">
+          Previous
+        </a>
+      </li>
+        {% endif %}
+        <li class=" page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of
+              {{ page_obj.paginator.num_pages }}</a></li>
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">
+            Next
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
